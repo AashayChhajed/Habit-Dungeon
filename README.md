@@ -138,7 +138,3 @@ datasource db {
     If you move the project to a different drive, delete your `node_modules` and `.next` folder, update the absolute path in `.env`, and run `npm install` and `npx prisma generate` again to prevent native file lock hangs.
 
 ---
-
-## 📜 License
-
-This project is licensed under the [MIT License](LICENSE). Customize it and share your progress!
