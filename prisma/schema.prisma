@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(uuid())
+  username   String
+  level      Int         @default(1)
+  xp         Int         @default(0)
+  gold       Int         @default(0)
+  hp         Int         @default(100)
+  maxHp      Int         @default(100)
+  habits     Habit[]
+  activeBoss ActiveBoss?
+}
+
+model Habit {
+  id          String   @id @default(uuid())
+  title       String
+  difficulty  String   @default("EASY") // "EASY", "MEDIUM", "HARD"
+  isCompleted Boolean  @default(false)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  updatedAt   DateTime @updatedAt
+}
+
+model ActiveBoss {
+  id        String  @id @default(uuid())
+  name      String
+  currentHp Int
+  maxHp     Int
+  imageUrl  String?
+  userId    String  @unique
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

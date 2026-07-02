@@ -1,26 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&family=Press+Start+2P&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #09090b; /* Deep zinc-950 */
+  --foreground: #f4f4f5; /* Zinc-100 */
+  --card: #18181b; /* Zinc-900 */
+  --card-foreground: #f4f4f5;
+  --border: #27272a; /* Zinc-800 */
+  
+  --hp-red: #ef4444;
+  --xp-cyan: #06b6d4;
+  --gold-amber: #f59e0b;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --font-sans: 'Outfit', sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Outfit', sans-serif;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(239, 68, 68, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.04) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Typography styles */
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+.font-pixel {
+  font-family: 'Press Start 2P', monospace;
+}
+
+/* Custom visual utilities */
+.rpg-panel {
+  background: rgba(24, 24, 27, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(63, 63, 70, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border-radius: 1rem;
+}
+
+.rpg-panel-glow-red {
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.1), inset 0 0 10px rgba(239, 68, 68, 0.05);
+}
+
+.rpg-panel-glow-cyan {
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.1), inset 0 0 10px rgba(6, 182, 212, 0.05);
+}
+
+.rpg-panel-glow-gold {
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.1), inset 0 0 10px rgba(245, 158, 11, 0.05);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Animations */
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: translate(-4px, 4px) rotate(-1deg); }
+  20%, 40%, 60%, 80% { transform: translate(4px, -4px) rotate(1deg); }
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes flash-red {
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 0 rgba(239, 68, 68, 0)); }
+  50% { filter: brightness(1.5) sepia(1) hue-rotate(-50deg) saturate(3) drop-shadow(0 0 20px rgba(239, 68, 68, 0.8)); }
+}
+
+.animate-flash-red {
+  animation: flash-red 0.4s ease-in-out;
+}
+
+/* Medieval Checkbox and Radio styling */
+.rpg-checkbox {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #52525b;
+  border-radius: 4px;
+  background-color: transparent;
+  display: inline-grid;
+  place-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rpg-checkbox::before {
+  content: "";
+  width: 0.65rem;
+  height: 0.65rem;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--gold-amber);
+  transform-origin: center;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.rpg-checkbox:checked {
+  border-color: var(--gold-amber);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+
+.rpg-checkbox:checked::before {
+  transform: scale(1);
+}
+
+.rpg-checkbox:focus {
+  outline: 2px solid rgba(245, 158, 11, 0.3);
+  outline-offset: 2px;
 }
